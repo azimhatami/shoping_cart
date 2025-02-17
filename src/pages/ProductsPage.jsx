@@ -7,9 +7,20 @@ function ProductsPage() {
   console.log('products', products);
 
   return(
-    <>
-      <p>Products Page</p>
-    </>
+    <div className='flex justify-between w-full h-[calc(100vh-4rem)]'>
+      <div className='w-full'>
+        {
+          products.map((product) => {
+            return(
+              <p key={product.id}>{product.title}</p>
+            );
+          })
+        }
+      </div>
+      <div className='w-50 border-1 border-gray-600 rounded-lg p-2'>
+        side bar
+      </div>
+    </div>
   );
 }
 

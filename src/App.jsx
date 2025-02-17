@@ -1,11 +1,21 @@
+import { Routes, Route, Navigate } from "react-router";
+
+import ProductsPage from './pages/ProductsPage';
+import DetailsPage from './pages/DetailsPage';
+import CheckoutPage from './pages/CheckoutPage';
+import NotFoundPage from './pages/NotFoundPage';
+
 import './App.css'
 
 function App() {
-
   return (
-    <>
-      <h2 className='font-bold text-2xl'>Shoping cart</h2>
-    </>
+    <Routes>
+      <Route index element={<Navigate to='/products' replace />} />
+      <Route path='/products' element={<ProductsPage />} />
+      <Route path='/products/:id' element={<DetailsPage />} />
+      <Route path='/checkout' element={<CheckoutPage />} />
+      <Route path='/*' element={<NotFoundPage />} />
+    </Routes>
   )
 }
 

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useProducts } from '../context/ProductContext';
 import { FiSearch } from "react-icons/fi";
+import { FaListUl } from "react-icons/fa";
 
 import Card from '../components/Card';
 import Loader from '../components/Loader';
@@ -15,6 +16,14 @@ function ProductsPage() {
 
   const searchHandler = () => {
     console.log('search')
+  };
+
+  const categoryHandler = (event) => {
+    const {tagName} = event.target;
+    const category = event.target.innerText.toLowerCase();
+
+    if (tagName !== 'LI') return; 
+    console.log(category);
   };
 
   return(
@@ -48,7 +57,20 @@ function ProductsPage() {
         }
       </div>
       <div className='w-50 border-1 border-gray-600 rounded-lg p-2'>
-        side bar
+        <div className='flex items-center gap-x-5 mb-8 text-red-500 font-bold'>
+          <FaListUl className='text-lg'/>
+          <p className='text-lg'>Category</p>
+        </div>
+        <ul 
+          className='text-lg font-semibold text-gray-700'
+          onClick={() => categoryHandler(event)}
+        >
+          <li className='text-red-500 bg-red-300/50 rounded-md px-2'>All</li>
+          <li>Electronics</li>
+          <li>Jewelery</li>
+          <li>Men's Clothing</li>
+          <li>Women's Clothing</li>
+        </ul>
       </div>
     </div>
     </>

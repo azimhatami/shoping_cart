@@ -1,5 +1,7 @@
 import { useProducts } from '../context/ProductContext';
 
+import Card from '../components/Card';
+
 
 function ProductsPage() {
 
@@ -7,12 +9,12 @@ function ProductsPage() {
   console.log('products', products);
 
   return(
-    <div className='flex justify-between w-full h-[calc(100vh-4rem)]'>
-      <div className='w-full'>
+    <div className='flex gap-x-4 w-full h-[calc(100vh-4rem)]'>
+      <div className='w-full h-[calc(100vh-4rem)] flex flex-wrap itmes-center gap-x-4 gap-y-6 overflow-auto shadow-lg'>
         {
           products.map((product) => {
             return(
-              <p key={product.id}>{product.title}</p>
+              <Card key={product.id} data={product} />
             );
           })
         }

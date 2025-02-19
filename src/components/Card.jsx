@@ -7,9 +7,9 @@ import { shortenText } from '../helpers/helper';
 function Card({ data }) {
   const { id, title, image, price } = data;
   return(
-    <div className='w-60 flex flex-col justify-between p-2 rounded-md border-1 border-gray-600 hover:shadow-xl hover:shadow-gray-400'>
+    <div className='w-50 flex flex-col justify-between p-2 rounded-md border-1 border-gray-600 hover:shadow-xl hover:shadow-gray-400'>
       <div>
-      <img src={image} alt={title} className='w-full h-60 rounded-lg'/>
+      <img src={image} alt={title} className='w-50 h-60 rounded-lg'/>
       <h3 className='text-lg font-bold pt-4'>{shortenText(title)}</h3>
       <p className='text-sm font-semibold text-gray-600'>{price}</p>
       </div>

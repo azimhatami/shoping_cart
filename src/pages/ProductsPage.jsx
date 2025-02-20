@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useProducts } from '../context/ProductContext';
+import { searchProducts, filterCategoryProducts } from '../helpers/helper';
 import { FiSearch } from "react-icons/fi";
 import { FaListUl } from "react-icons/fa";
 
@@ -10,12 +11,25 @@ import Loader from '../components/Loader';
 function ProductsPage() {
 
   const products = useProducts();
+  const [displayed, setDisplayed] = useState([]);
   const [search, setSearch] = useState('');
+  const [query, setQuery] = useState({});
+
+  useEffect(() => {
+    setDisplayed(products)
+  }, [products])
+
+  useEffect(() => {
+    let finalProducts = searchProducts(products, query.search)
+    finalProducts = filterCategoryProducts(finalProducts, query.category)
+    setDisplayed(finalProducts)
+    console.log(finalProducts);
+  }, [query])
 
   // console.log('products', products);
 
   const searchHandler = () => {
-    console.log('search')
+    setQuery((query) => ({...query, search}))
   };
 
   const categoryHandler = (event) => {
@@ -23,7 +37,7 @@ function ProductsPage() {
     const category = event.target.innerText.toLowerCase();
 
     if (tagName !== 'LI') return; 
-    console.log(category);
+    setQuery((query) => ({...query, category}))
   };
 
   return(
@@ -32,12 +46,12 @@ function ProductsPage() {
       <input 
         type='text' 
         placeholder='pls enter text...' 
-        className='w-[28rem] h-10 border-1 border-gray-600 rounded-[3rem] px-3 py-1 relative shadow-lg shadow-rose-400/50'
+        className='w-[28rem] h-10 border-1 border-gray-600 rounded-[3rem] px-3 py-1 relative shadow-lg shadow-rose-400/50 outline-none'
         value={search}
         onChange={(event) => setSearch(event.target.value.toLowerCase().trim())}
       />
       <button 
-        className='bg-red-400 w-8 h-8 rounded-full flex place-items-center place-content-center text-lg hover:text-xl cursor-pointer absolute top-19 left-[27.7rem]'
+        className='bg-red-400 w-8 h-8 rounded-full flex place-items-center place-content-center text-lg hover:text-xl cursor-pointer absolute top-19 left-[47.2rem] outline-none'
         onClick={searchHandler}
       >
         <FiSearch className='text-white'/>
@@ -45,11 +59,11 @@ function ProductsPage() {
     </div>
     <div className='flex gap-x-4 w-full h-[calc(100vh-4rem)]'>
       <div className='w-full h-[calc(100vh-4rem)] flex flex-wrap itmes-center gap-x-4 gap-y-6 overflow-auto shadow-lg'>
-        {!products.length && (
+        {!displayed.length && (
           <Loader />
         )}
         {
-          products.map((product) => {
+          displayed.map((product) => {
             return(
               <Card key={product.id} data={product} />
             );
